@@ -283,7 +283,11 @@ class Page(Base):
         # determine whether it has been changed in the save handler:
         self._original_cached_url = self._cached_url
 
-    @commit_on_success
+    def delete(self, *args, **kwargs):
+        self.baseproduct_set.clear()
+        self.productcategory_set.clear()
+        super(Page, self).delete(*args, **kwargs)
+
     def save(self, *args, **kwargs):
         cached_page_urls = {}
 
