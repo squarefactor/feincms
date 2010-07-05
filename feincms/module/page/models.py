@@ -288,6 +288,7 @@ class Page(Base):
         self.productcategory_set.clear()
         super(Page, self).delete(*args, **kwargs)
 
+    @commit_on_success
     def save(self, *args, **kwargs):
         cached_page_urls = {}
 
