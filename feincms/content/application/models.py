@@ -172,9 +172,10 @@ class ApplicationContent(models.Model):
                 "name":     name,
                 "config":   app_conf
             }
-
+        application_choices = sorted([(c['urls'], c['name']) for c in cls.ALL_APPS_CONFIG.values()],
+                                     key=lambda application: application[1])
         cls.add_to_class('urlconf_path',
-            models.CharField(_('application'), max_length=100, choices=[(c['urls'], c['name']) for c in cls.ALL_APPS_CONFIG.values()])
+            models.CharField(_('application'), max_length=100, choices=application_choices)
         )
 
         class ApplicationContentItemEditorForm(ItemEditorForm):

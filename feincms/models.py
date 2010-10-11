@@ -14,6 +14,7 @@ from django.template.loader import render_to_string
 from django.utils.datastructures import SortedDict
 from django.utils.encoding import force_unicode
 from django.utils.translation import ugettext_lazy as _
+from django.utils.text import capfirst
 
 from feincms import settings
 from feincms.utils import get_object, copy_model_instance
@@ -47,7 +48,8 @@ class Region(object):
         of (content type key, beautified content type name) tuples
         """
 
-        return [(ct.__name__.lower(), ct._meta.verbose_name) for ct in self._content_types]
+        return sorted([(ct.__name__.lower(), capfirst(ct._meta.verbose_name)) for ct in self._content_types],
+                      key=lambda content_type: content_type[1])
 
 
 class Template(object):
